@@ -5,7 +5,7 @@ const estado = reactive ({
   numero1: 0,
   numero2: 0,
   operacao: '+',
-  resultado: '10',
+  resultado: '0',
 })
 
 const calcular = (estado) => {
