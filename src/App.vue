@@ -8,7 +8,8 @@ const estado = reactive ({
   resultado: '0',
 })
 
-const calcular = (estado) => {
+const calcular = (valor, campo) => {
+  estado[campo] = valor // atualiza o valor do campo correspondente
   switch (estado.operacao) {
     case  '-':
       estado.resultado = estado.numero1 - estado.numero2
@@ -23,7 +24,8 @@ const calcular = (estado) => {
       break
 
     default:
-      estado.resultado = estado.numero1 + estado.numero2
+      estado.resultado = Number(estado.numero1) + Number(estado.numero2)
+
       break
   }
 }
@@ -36,17 +38,14 @@ const calcular = (estado) => {
   <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
     <form class="w-50" v-on:submit.prevent="(evento)">
       <div class="input-group mb-3">
-        <input type="number" class="form-control" placeholder="Digite um número" v-model="estado.numero1">
-        <select class="form-select" v-model="estado.operacao">
+        <input type="number" class="form-control" placeholder="Digite um número" v-on:change="event => calcular(event.target.value, 'numero1')">
+        <select class="form-select" v-on:change="event => calcular(event.target.value, 'operacao')">
           <option value="+">+</option>
           <option value="-">-</option>
           <option value="*">x</option>
           <option value="/">%</option>
         </select>
-        <input v-model="estado.numero2" type="number" class="form-control" placeholder="Digite outro número">
-      </div>
-      <div class="d-grid gap-2">
-        <button class="btn btn-primary" @click="calcular(estado)">Calcular</button>
+        <input type="number" class="form-control" placeholder="Digite outro número" v-on:change="event => calcular(event.target.value, 'numero2')">
       </div>
     </form>
   </div>
